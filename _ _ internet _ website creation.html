@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<!-- saved from url=(0104)https://www.freecounterstat.com/geozoom.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&base=counter3&type_clic=1 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> :  &gt; internet &gt; website creation</title>
+<meta name="description" content=" &gt; internet &gt; website creation, ">
+<meta name="keywords" content=" &gt; internet &gt; website creation">
+<meta name="rating" content="General">
+<link rel="stylesheet" media="all" href="./_ _ internet _ website creation_files/style_flags.css">
+<link href="./_ _ internet _ website creation_files/style.css" rel="stylesheet" type="text/css">
+<meta name="robots" content="noindex, nofollow, noarchive">
+
+<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+<script async="" src="./_ _ internet _ website creation_files/analytics.js.download"></script><script type="text/javascript" async="" src="./_ _ internet _ website creation_files/counter_async.js.download"></script><script src="./_ _ internet _ website creation_files/jquery-2.1.4.js.download"></script><style></style>
+<script src="./_ _ internet _ website creation_files/jquery-ui_1.11.4.js.download"></script>
+<script src="./_ _ internet _ website creation_files/jquery.inview.min.js.download"></script>
+
+<script src="./_ _ internet _ website creation_files/OpenLayers.js.download" type="text/javascript"></script>
+        <script type="text/javascript">
+OpenLayers.Strategy.AttributeCluster = OpenLayers.Class(OpenLayers.Strategy.Cluster, {
+    /**
+     * the attribute to use for comparison
+     */
+    attribute: null,
+    /**
+     * Method: shouldCluster
+     * Determine whether to include a feature in a given cluster.
+     *
+     * Parameters:
+     * cluster - {<OpenLayers.Feature.Vector>} A cluster.
+     * feature - {<OpenLayers.Feature.Vector>} A feature.
+     *
+     * Returns:
+     * {Boolean} The feature should be included in the cluster.
+     */
+    shouldCluster: function(cluster, feature) {
+        var cc_attrval = cluster.cluster[0].attributes[this.attribute];
+        var fc_attrval = feature.attributes[this.attribute];
+        var superProto = OpenLayers.Strategy.Cluster.prototype;
+        return cc_attrval === fc_attrval &&
+               superProto.shouldCluster.apply(this, arguments);
+    },
+    CLASS_NAME: "OpenLayers.Strategy.AttributeCluster"
+});
+                             
+var features_off = [];
+features_off.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(79.599503,17.974001 ), {city:"Warangal<br>Country: India",clazz : 0,visitor:4},{fillOpacity : 0.8,fillColor : '#CC0000',pointRadius : 7 ,strokeWidth : 1, strokeColor : '#000000',strokeOpacity : 0.2}));
+features_off.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Point(79.599503,17.974001 ), {city:"Warangal<br>Country: India",clazz : 1,visitor:1},{fillOpacity : 0.8,fillColor : '#006600',pointRadius : 5 ,strokeWidth : 1, strokeColor : '#000000',strokeOpacity : 0.2}));
+
+var coef = 0.05;
+var Lon_user = 79.599503;
+var Lat_user = 17.974001;
+var city_user = "Warangal";
+var country_user = "India";
+var region_user = "Andhra Pradesh";
+var distance = "5";
+var threshold = "2";
+ 
+            // create a semi-random grid of features to be clustered
+	   function init() {
+document.getElementById('liste_pays_map').scrollTop=0;
+
+       //window.scrollTo(0,0);
+		/*var map = new OpenLayers.Map('map', {controls : [
+		new OpenLayers.Control.PanZoomBar(),
+		new OpenLayers.Control.Navigation(),
+		new OpenLayers.Control.OverviewMap()
+		],
+		div : map, maxResolution:'auto',
+		center: new OpenLayers.LonLat(0,0),
+		zoom:1,
+		numZoomLevels : 6
+		});*/
+		 
+	/*	var base = new OpenLayers.Layer.WMS(
+                "Natural Earth", 
+		//"http://nepomuk.openstreetmap.org",
+		"http://maps.opengeo.org/geowebcache/service/wms",
+//		"http://91.121.78.203:8080/geoserver/geomap/wms",
+//?service=WMS&version=1.1.0&request=GetMap&layers=geomap:HYP_50M_SR&styles=&bbox=-179.99999999999997,-89.99999999998201,179.99999999996405,90.0&width=660&height=330&srs=EPSG:404000&format=application/openlayers
+               // {layers: "bluemarble"}
+		{layers: "geomap:HYP_50M_SR_W"}
+               // {layers: "geomap:land_shallow_topo_21600"}
+              // {layers: "geomap:NE1_LR_LC_SR_W_DR"}
+	//	{layers: "geomap:land_shallow_topo_21600"}
+
+            );*/
+     var mapOptions = { 
+projection: new OpenLayers.Projection('EPSG:4326'),
+//maxExtent: new OpenLayers.Bounds(-180.0,-90.0,180.0,90.0),
+units: "degrees",
+controls : [
+                new OpenLayers.Control.PanZoomBar({displayScale:true}),
+                new OpenLayers.Control.Navigation(),
+                //new OpenLayers.Control.OverviewMap()
+                ],
+                 
+		maxResolution:'auto',
+                center: new OpenLayers.LonLat(0,0)
+		
+};
+var map = new OpenLayers.Map('map', mapOptions );
+
+
+var base = new OpenLayers.Layer.WMS(
+        "Natural Earth", 
+	//"https://ahocevar.com/geoserver/wms",
+		//"http://54.38.94.82:8080/geoserver/freecounter/wms",
+		"https://www.freecounterstat.com/geoserver/freecounter/wms",
+		//{LAYERS: 'ne:NE1_HR_LC_SR_W_DR', VERSION: '1.1.1'},
+                {LAYERS: "freecounter:NE2_50M_SR_W"},
+		//{LAYERS: "freecounter:NE2_HR_LC_SR_W"},
+                 {'maxResolution': "auto",'numZoomLevels': 8}
+
+            );
+
+
+
+
+                var style = new OpenLayers.Style({
+                    pointRadius: "${radius}",
+                    fillColor: "${getColor}",
+                    fillOpacity: 0.8,
+                    strokeColor: "${getColor}",
+                    //strokeWidth: "${width}",
+		    strokeWidth: 1,
+                    strokeOpacity: 0.2,
+		    strokeColor: "#000000" 
+                }, {
+                    context: {
+                        width: function(feature) {
+                            return (feature.cluster) ? 2 : 1;
+                        },
+                        radius: function(feature) {
+                      
+                            if(feature.cluster) {
+				var mbvis=0;
+				        for(var i=0; i<feature.attributes.count;i++){
+				        mbvis+=Number(feature.cluster[i].attributes.visitor);
+					}
+                            }
+			if(mbvis <= 10 * coef){ mbvi=3;}
+                        else if(mbvis <= 50 * coef){ mbvi=5;}
+                        else if(mbvis <= 100 * coef){ mbvi=7;}
+                        else if(mbvis <= 500 * coef){ mbvi=10;}
+                        else if(mbvis <= 1000 * coef){ mbvi=15;}
+			else if(mbvis <= 10000 * coef){ mbvi=20;}
+                        else { mbvi=25;}
+			return mbvi;
+                        }
+                    ,
+		    getColor: function(feature){
+	              var color = '#CC0000';
+          		  if (feature.attributes.clazz && feature.attributes.clazz === 1) {
+              		  color = '#006600';
+           		  } else if(feature.cluster) {
+                	  var onlyFour = true;
+                		for (var i = 0; i < feature.cluster.length; i++) {
+                    			if (onlyFour && feature.cluster[i].attributes.clazz !== 1) {
+                        		onlyFour = false;
+                    			}
+                		}
+                		if (onlyFour === true) {
+        	            	color = '#006600';
+                		}
+            		  }
+            	     return color;
+       		     }
+		}
+                });
+                
+                //strategy = new OpenLayers.Strategy.Cluster();
+		strategy = new OpenLayers.Strategy.AttributeCluster({attribute:'clazz'});
+                clusters = new OpenLayers.Layer.Vector("Clusters", {
+                    strategies: [strategy],
+                    styleMap: new OpenLayers.StyleMap({
+                        "default": style,
+                        "select": {
+                            fillColor: "#8aeeef",
+                            strokeColor: "#A40000"
+                        }
+                    }),
+
+		//popup
+		
+        eventListeners:{
+            'featureselected':function(evt){
+                var feature = evt.feature;
+		var mbvis=0;
+		var nbcity=0;
+		if(feature.cluster) {
+		   for(var i=0; i<feature.attributes.count;i++){
+                   mbvis+=Number(feature.cluster[i].attributes.visitor);
+		   nbcity++;
+                   }
+		var city="Number city : "+nbcity;
+		var zoom ="<br> Zoom for detail";
+		} else {
+		mbvis=feature.attributes.visitor;
+	        var city="City : "+feature.attributes.city;
+		var zoom ="";
+		}
+                var popup = new OpenLayers.Popup.FramedCloud("popup",
+                    OpenLayers.LonLat.fromString(feature.geometry.toShortString()),
+                    null,
+                    "<div style='font-size:.8em'>" + city +"<br> Number visitors : " + mbvis + zoom +"</div>",
+                    null,
+                    true
+		    
+                );
+                feature.popup = popup;
+                map.addPopup(popup,true);
+            },
+            'featureunselected':function(evt){
+                var feature = evt.feature;
+                map.removePopup(feature.popup);
+                feature.popup.destroy();
+                feature.popup = null;
+            }
+        }
+        });
+//Marker
+				
+                                var markers = new OpenLayers.Layer.Markers( "Markers" );
+                                var size = new OpenLayers.Size(24,24);
+	var offset = new OpenLayers.Pixel(-(size.w/2), -(size.h/2));
+        var icon = new OpenLayers.Icon('/commun/openlayer/img/you.gif',size,offset);
+        var point= new OpenLayers.Marker(new OpenLayers.LonLat(Lon_user,Lat_user),icon); 
+                        //marker.events.register('mousedown', marker, function(evt) { alert(this.icon.url); OpenLayers.Event.stop(evt); });
+        markers.addMarker(point);
+                        
+             var popup = new OpenLayers.Popup.FramedCloud("popup",
+                    new OpenLayers.LonLat(Lon_user,Lat_user),
+                    null,
+                    "<div style='font-size:.8em'>Your country : " + country_user + "<br>Your region : "+ region_user + "<br>Your city : " + city_user + "</div>",
+		   null,
+                    true
+                );
+                var select = new OpenLayers.Control.SelectFeature(
+                    clusters, {hover: true}
+                );
+                map.addControl(select);
+                select.activate();
+		map.addLayers([base,clusters,markers]);
+		//Zoom data php
+		map.setCenter(new OpenLayers.LonLat(79.599503, 17.974001), 2);map.addPopup(popup);		reset(features_off);
+
+         	//document.getElementById('list').innerHTML=info_country;
+            }
+            //var distance = 30;
+            //var threshold = 10;
+            function reset(features_off) {
+                strategy.distance = distance || strategy.distance;
+                strategy.threshold = threshold || strategy.threshold;
+                clusters.removeFeatures(clusters.features_off);
+                clusters.addFeatures(features_off);
+            }
+window.onload=function(){
+init();
+}
+        </script>
+
+
+
+<style>
+.h_slider{
+z-index:7777;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="./_ _ internet _ website creation_files/style(1).css"></head>
+<body data-gr-c-s-loaded="true">
+<div class="menu-stats">
+<div>
+<h1>Freecounterstat</h1>
+<ul>
+<li><label class="btn" for="modal-one">QrCode Statistics</label></li>
+<li><a href="https://www.freecounterstat.com/index.php" title="Homepage web counters">Homepage</a></li>
+<li><a href="https://www.freecounterstat.com/step_1.php" title="Sign up free">Sign-up free</a></li>
+<li><a href="https://www.freecounterstat.com/instructions-modif.php" title="Changing web counter">Changing counter</a></li>
+<li><a href="https://www.freecounterstat.com/extensions-browser.php" title="Chrome and Opera">Chrome and Opera</a></li>
+<li><a href="https://www.freecounterstat.com/contact.php" title="Contact">Contact</a></li>
+</ul>
+</div>
+</div><div class="main-stats">
+<div class="box-infos">
+<div class="blk-title"><span class="title-ariane-cat"> &gt; internet &gt; website creation</span></div>
+<div class="blk-info">
+
+
+<!-- stat -->
+<div class="box-content">
+<span class="blk-icon"><i class="box-deco a-info"></i></span>
+<span class="box-text"><label>Currently online</label> <span class="sum_onl">1</span></span>
+<span class="box-number"><label> Yesterday Total day</label> <em></em></span>
+<span class="box-description"><label>Today projection</label> <em>5</em>   <strong class="evolution-plus">nd</strong> </span> <!--<tt> 13:00</tt>-->
+</div>
+<div class="box-content centre">
+<span class="blk-icon"><i class="box-deco b-info"></i></span>
+<span class="box-text"><label>Total visitors at <tt> 13:00</tt></label> <em>5</em></span>
+<span class="box-number"><label>Yesterday same time</label> <em>0</em>  <strong class="evolution-plus">nd</strong></span>
+
+<span class="box-description"><label>the last week</label> <em>0</em>  <strong class="evolution-plus">nd</strong></span>
+</div>
+<div class="box-content">
+<span class="blk-icon"><i class="box-deco c-info"></i></span>
+<span class="box-text"><label>Total visites at <tt> 13:00</tt></label> <em>15</em></span>
+<span class="box-number"><label>yesterday same time</label> <em>0</em>  <strong class="evolution-plus">nd</strong></span>
+
+<span class="box-description"><label>the last week</label> <em>0</em>  <strong class="evolution-plus">nd</strong></span>
+</div>
+<!-- end stat -->
+</div>
+
+
+<div class="NavStats">
+<ul class="TabNavGroup">
+  <li class="TabPanNavSelected" tabindex="0" onclick="aff_div(1,&#39;&#39;)">Today Cities Map</li>
+  <li class="TabPanNav" tabindex="0" onclick="aff_div(4,&#39;month&#39;)">Monthly Cities Map</li>
+  <li class="TabPanNav" tabindex="0" onclick="aff_div(5,&#39;30days&#39;)">Last 30 Days Cities Map</li>
+  <li class="TabPanNav" tabindex="0" onclick="aff_div(2,&#39;&#39;)">Total Countries Map</li>
+<!--  <li class="TabPanNav" tabindex="0" onclick="aff_div(3,'')">Live Feed</li>-->
+</ul>
+</div>
+<a name="zoomcity"></a>
+<div class="bloc100">
+<div class="blk-title"><span class="title-world-map">Map of city visitors (Day)</span></div>
+ <div class="bloc80">
+   <div class="box-map"><div id="map" class="smallmap olMap"><!--Map Is Out For Upgrade. Please Try Again Later--><div id="OpenLayers.Map_8_OpenLayers_ViewPort" class="olMapViewport olControlDragPanActive olControlZoomBoxActive olControlPinchZoomActive olControlNavigationActive olControlSelectFeatureActive" style="position: relative; overflow: hidden; width: 100%; height: 100%;"><div id="OpenLayers.Map_8_OpenLayers_Container" style="position: absolute; width: 100px; height: 100px; z-index: 749; left: 0px; top: 0px;"><div id="OpenLayers.Layer.WMS_35" dir="ltr" class="olLayerDiv olLayerGrid" style="position: absolute; width: 100%; height: 100%; z-index: 100; left: 0%; top: 0%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W.jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 294%; top: -15%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(1).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 550%; top: -15%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(2).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 294%; top: 241%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(3).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 550%; top: 241%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(4).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 38%; top: -15%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(5).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 38%; top: 241%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(6).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 806%; top: -15%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(7).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 294%; top: 497%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(8).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 806%; top: 241%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(9).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 550%; top: 497%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(10).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 38%; top: 497%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(11).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: -218%; top: -15%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(12).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: 806%; top: 497%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(13).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: -218%; top: 241%; width: 256%; height: 256%;"><img class="olTileImage" src="./_ _ internet _ website creation_files/freecounter-NE2_50M_SR_W(14).jpg" style="visibility: inherit; opacity: 1; position: absolute; left: -218%; top: 497%; width: 256%; height: 256%;"></div><div id="OpenLayers.Layer.Vector_43" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 330; left: 0px; top: 0px;"><svg id="OpenLayers.Layer.Vector_43_svgRoot" width="1019" height="348" viewBox="0 0 1019 348" style="display: block;"><g id="OpenLayers.Layer.Vector_43_root" transform="" style="visibility: visible;"><g id="OpenLayers.Layer.Vector_43_vroot"><circle id="OpenLayers.Geometry.Point_2" cx="509.4999999999986" cy="173.99999999999997" r="7" fill="#CC0000" fill-opacity="0.8" stroke="#000000" stroke-opacity="0.2" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></circle><circle id="OpenLayers.Geometry.Point_4" cx="509.4999999999986" cy="173.99999999999997" r="5" fill="#006600" fill-opacity="0.8" stroke="#000000" stroke-opacity="0.2" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></circle></g><g id="OpenLayers.Layer.Vector_43_troot"></g></g></svg></div><div id="OpenLayers.Layer.Markers_45" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 335;"><div id="OL_Icon_47" style="position: absolute; width: 24px; height: 24px; left: 497px; top: 162px;"><img id="OL_Icon_47_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/you.gif" style="position: relative; width: 24px; height: 24px;"></div></div><div id="popup" class="olPopup" style="position: absolute; overflow: hidden; left: 465px; top: 174px; width: 157px; height: 83px; z-index: 751;"><div id="popup_GroupDiv" style="position: absolute; overflow: hidden; top: 0px; left: 0px; height: 100%; width: 100%;"><div id="popup_contentDiv" class="olFramedCloudPopupContent" style="width: 124px; height: 34px; position: absolute; z-index: 1; left: 8px; top: 40px;"><div style="font-size:.8em">Your country : India<br>Your region : Andhra Pradesh<br>Your city : Warangal</div></div><div id="popup_close" class="olPopupCloseBox" style="width: 17px; height: 17px; position: absolute; right: 8px; top: 40px; z-index: 1;"></div><div id="popup_FrameDecorationDiv_0" style="position: absolute; overflow: hidden; width: 135px; height: 30px; left: 0px; bottom: 21px; right: 22px; top: 32px;"><img id="popup_FrameDecorationImg_0" src="./_ _ internet _ website creation_files/cloud-popup-relative.png" style="width: 1276px; height: 736px; position: absolute; left: 0px; top: 0px;"></div><div id="popup_FrameDecorationDiv_1" style="position: absolute; overflow: hidden; width: 22px; height: 30px; bottom: 21px; right: 0px; top: 32px;"><img id="popup_FrameDecorationImg_1" src="./_ _ internet _ website creation_files/cloud-popup-relative.png" style="width: 1276px; height: 736px; position: absolute; left: -1238px; top: 0px;"></div><div id="popup_FrameDecorationDiv_2" style="position: absolute; overflow: hidden; width: 135px; height: 21px; left: 0px; bottom: 0px; right: 22px;"><img id="popup_FrameDecorationImg_2" src="./_ _ internet _ website creation_files/cloud-popup-relative.png" style="width: 1276px; height: 736px; position: absolute; left: 0px; top: -629px;"></div><div id="popup_FrameDecorationDiv_3" style="position: absolute; overflow: hidden; width: 22px; height: 21px; bottom: 0px; right: 0px;"><img id="popup_FrameDecorationImg_3" src="./_ _ internet _ website creation_files/cloud-popup-relative.png" style="width: 1276px; height: 736px; position: absolute; left: -1238px; top: -629px;"></div><div id="popup_FrameDecorationDiv_4" style="position: absolute; overflow: hidden; width: 81px; height: 33px; left: 0px; top: 0px;"><img id="popup_FrameDecorationImg_4" src="./_ _ internet _ website creation_files/cloud-popup-relative.png" style="width: 1276px; height: 736px; position: absolute; left: -311px; top: -674px;"></div></div></div></div><div id="OpenLayers.Control.PanZoomBar_6" class="olControlPanZoomBar olControlNoSelect" unselectable="on" style="position: absolute; left: 4px; top: 4px; z-index: 1002;"><div id="OpenLayers.Control.PanZoomBar_6_panup" class="olButton" style="position: absolute; left: 13px; top: 4px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_panup_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/north-mini.png" style="position: relative; width: 18px; height: 18px;"></div><div id="OpenLayers.Control.PanZoomBar_6_panleft" class="olButton" style="position: absolute; left: 4px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_panleft_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/west-mini.png" style="position: relative; width: 18px; height: 18px;"></div><div id="OpenLayers.Control.PanZoomBar_6_panright" class="olButton" style="position: absolute; left: 22px; top: 22px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_panright_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/east-mini.png" style="position: relative; width: 18px; height: 18px;"></div><div id="OpenLayers.Control.PanZoomBar_6_pandown" class="olButton" style="position: absolute; left: 13px; top: 40px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_pandown_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/south-mini.png" style="position: relative; width: 18px; height: 18px;"></div><div id="OpenLayers.Control.PanZoomBar_6_zoomin" class="olButton" style="position: absolute; left: 13px; top: 63px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_zoomin_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/zoom-plus-mini.png" style="position: relative; width: 18px; height: 18px;"></div><div id="OpenLayers_Control_PanZoomBar_ZoombarOpenLayers.Map_8" class="olButton" style="background-image: url(&quot;/commun/openlayer/img/zoombar.png&quot;); left: 13px; top: 81px; width: 18px; height: 88px; position: absolute; cursor: pointer;"></div><div id="OpenLayers.Control.PanZoomBar_6_OpenLayers.Map_8" style="position: absolute; left: 12px; top: 137px; width: 20px; height: 9px; cursor: move;"><img id="OpenLayers.Control.PanZoomBar_6_OpenLayers.Map_8_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/slider.png" style="position: relative; width: 20px; height: 9px;"></div><div id="OpenLayers.Control.PanZoomBar_6_zoomout" class="olButton" style="position: absolute; left: 13px; top: 169px; width: 18px; height: 18px; cursor: pointer;"><img id="OpenLayers.Control.PanZoomBar_6_zoomout_innerImage" class="olAlphaImg" src="./_ _ internet _ website creation_files/zoom-minus-mini.png" style="position: relative; width: 18px; height: 18px;"></div></div><div id="OpenLayers.Control.SelectFeature_53" class="olControlSelectFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1003;"></div></div></div>
+ </div>
+ </div>
+ <div class="bloc20">
+  <div id="liste_pays_map" class="liste_pays_map">
+  <table border="0" cellpadding="0" cellspacing="0" id="flags_map">
+  <tbody><tr><td colspan="2">Total visitor 5 <span style="font-size:9px;color:#006600">Onl 1</span></td></tr><tr><td id="fl_in"></td><td><div id="tot_IN"><a href="javascript:onMouseDown=affich_city(&#39;in&#39;)">India &nbsp;&nbsp;5 <span style="font-size:9px;color:#006600;">Onl 1</span></a></div></td></tr>
+<tr id="ci_in" style="display:none;"><td>&nbsp;</td><td>&nbsp;&nbsp;<a href="javascript:onMouseDown=zoom_city(17.974001,79.599503,&#39;IN&#39;)"><span style="font-size:9px;color:#CC0000">Warangal&nbsp;&nbsp;4</span> <span style="font-size:9px;color:#006600">Onl 1</span></a><br>
+</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>  </tbody></table>
+  </div>
+ </div>
+</div>
+
+<div class="bloc100" id="div_stats" style="display:block;">
+<div class="blk-title"><span class="title-world-statistics">Statistics</span></div>
+<div id="iframe_stats" style="min-height:550px;"><iframe width="100%" height="550" frameborder="0" scroll="auto" src="./_ _ internet _ website creation_files/idealstat_dev.html"></iframe></div>
+</div>
+<script>
+var bool_stat=false;
+        function affiche_stat(){
+                if(bool_stat==false){
+                $("#iframe_stats").html('<iframe  width="100%" height="550" frameborder="0" scroll="auto" src="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549"></iframe>');
+                $("#div_stats").css("display","block");
+                bool_stat=true;
+                }
+                else{
+                $("#div_stats").css("display","none");
+                bool_stat=false;
+                }
+        }
+$( document ).ready(function() {
+affiche_stat();
+});
+</script>
+
+
+ <a name="tab3"></a>
+<div class="bloc25">
+<div class="blk-title"><span class="title-feed">Last Visitors city</span></div>
+<!--
+<div class="promo">
+<ul>
+<li class="promo_en">
+<script data-cfasync="false" type="text/javascript" src="https://www.brightonclick.com/a/display.php?r=1497917"></script>
+</li>
+</ul>
+</div>
+-->
+ <div class="box-feed" id="box-feed" style="max-height:660px;min-height:660px;">
+ <ul>
+ <li class="blk-feed">
+  <div id="resfeed"></div>
+  <script>
+  //$(document).ready(function(){
+  	$("#box-feed").on('inview', function(event, visible){
+     if(visible)
+     {
+ 	  $.getScript("https://counter3.freecounterstat.com/private/res_geofeed2.js?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh", function( data, textStatus, jqxhr ) {
+      console.log( data ); // Data returned
+      console.log( textStatus ); // Success
+      console.log( jqxhr.status ); // 200
+      console.log( "Load was performed." );
+      });
+     }
+     else
+     {
+      $("#resfeed").empty();
+     }
+	});
+	//});
+  </script>
+   </li>
+ </ul>
+ </div>
+</div>
+<div class="bloc75">
+<div class="box-graph" style="display:none">
+<div class="blk-title"><span class="title-graphs-evolution" id="graph_cumul">Accumulated hourly</span></div>
+ <div class="graphiiiiii graph01">
+ <ul class="menu-graph01">
+  <li class="synth_title">Cumul</li>
+  <li class="synth_day"><a href="javascript:onmousedown=synth_jour_mois(&#39;jour&#39;)">Day</a></li>
+  <li class="synth_month"><a href="javascript:onmousedown=synth_jour_mois(&#39;mois&#39;)">Month</a></li>
+  <!--<li class="synth_an"><a href="javascript:onmousedown=synth_jour_mois('an')">TRAD_YEAR</a></li>-->
+
+<!-- <li id="legendline"><label></label> <ul><li class="couleur3" title="Last week"></li> <li class="couleur2" title="Yesterday"></li> <li class="couleur1" title="Today"></li> <li class="couleur4" title="Project"></li></ul></li>-->
+<li id="legendline"><span style="color: rgb(55, 183, 243);">Today</span><span style="color: rgb(204, 204, 204);">Project</span><span style="color: rgb(60, 192, 81);">Yesterday</span><span style="color: rgb(252, 179, 34);">Last week</span></li>
+ </ul>
+<div id="synthese_jour" style="position: relative; height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="342" version="1.1" width="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="12.5" y="211" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="211" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,211H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="164.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="164.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,164.5H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="118" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="118" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,118H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="71.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="71.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">6</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,71.5H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">8</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,25H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#fcb322" d="M25,211C25.01086956521739,211,25.032608695652176,211,25.043478260869566,211C25.054347826086957,211,25.07608695652174,211,25.08695652173913,211C25.09782608695652,211,25.119565217391305,211,25.130434782608695,211C25.141304347826086,211,25.16304347826087,211,25.17391304347826,211C25.184782608695652,211,25.206521739130434,211,25.217391304347824,211C25.228260869565215,211,25.25,211,25.26086956521739,211C25.27173913043478,211,25.293478260869566,211,25.304347826086957,211C25.315217391304348,211,25.336956521739133,211,25.347826086956523,211C25.358695652173914,211,25.380434782608695,211,25.391304347826086,211C25.402173913043477,211,25.42391304347826,211,25.434782608695652,211C25.445652173913043,211,25.467391304347828,211,25.47826086956522,211C25.48913043478261,211,25.51086956521739,211,25.52173913043478,211C25.532608695652172,211,25.554347826086957,211,25.565217391304348,211C25.57608695652174,211,25.597826086956523,211,25.608695652173914,211C25.619565217391305,211,25.641304347826086,211,25.652173913043477,211C25.663043478260867,211,25.684782608695652,211,25.695652173913043,211C25.706521739130434,211,25.72826086956522,211,25.73913043478261,211C25.75,211,25.771739130434785,211,25.782608695652176,211C25.793478260869566,211,25.815217391304348,211,25.82608695652174,211C25.83695652173913,211,25.858695652173914,211,25.869565217391305,211C25.880434782608695,211,25.90217391304348,211,25.91304347826087,211C25.92391304347826,211,25.945652173913043,211,25.956521739130434,211C25.967391304347824,211,25.98913043478261,211,26,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#3cc051" d="M25,211C25.01086956521739,211,25.032608695652176,211,25.043478260869566,211C25.054347826086957,211,25.07608695652174,211,25.08695652173913,211C25.09782608695652,211,25.119565217391305,211,25.130434782608695,211C25.141304347826086,211,25.16304347826087,211,25.17391304347826,211C25.184782608695652,211,25.206521739130434,211,25.217391304347824,211C25.228260869565215,211,25.25,211,25.26086956521739,211C25.27173913043478,211,25.293478260869566,211,25.304347826086957,211C25.315217391304348,211,25.336956521739133,211,25.347826086956523,211C25.358695652173914,211,25.380434782608695,211,25.391304347826086,211C25.402173913043477,211,25.42391304347826,211,25.434782608695652,211C25.445652173913043,211,25.467391304347828,211,25.47826086956522,211C25.48913043478261,211,25.51086956521739,211,25.52173913043478,211C25.532608695652172,211,25.554347826086957,211,25.565217391304348,211C25.57608695652174,211,25.597826086956523,211,25.608695652173914,211C25.619565217391305,211,25.641304347826086,211,25.652173913043477,211C25.663043478260867,211,25.684782608695652,211,25.695652173913043,211C25.706521739130434,211,25.72826086956522,211,25.73913043478261,211C25.75,211,25.771739130434785,211,25.782608695652176,211C25.793478260869566,211,25.815217391304348,211,25.82608695652174,211C25.83695652173913,211,25.858695652173914,211,25.869565217391305,211C25.880434782608695,211,25.90217391304348,211,25.91304347826087,211C25.92391304347826,211,25.945652173913043,211,25.956521739130434,211C25.967391304347824,211,25.98913043478261,211,26,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#cccccc" d="M25,211C25.01086956521739,211,25.032608695652176,211,25.043478260869566,211C25.054347826086957,211,25.07608695652174,211,25.08695652173913,211C25.09782608695652,211,25.119565217391305,211,25.130434782608695,211C25.141304347826086,211,25.16304347826087,211,25.17391304347826,211C25.184782608695652,211,25.206521739130434,211,25.217391304347824,211C25.228260869565215,211,25.25,211,25.26086956521739,211C25.27173913043478,211,25.293478260869566,211,25.304347826086957,211C25.315217391304348,211,25.336956521739133,211,25.347826086956523,211C25.358695652173914,211,25.380434782608695,211,25.391304347826086,211C25.402173913043477,199.37499999999952,25.42391304347826,129.625,25.434782608695652,118C25.445652173913043,106.375,25.467391304347828,120.90625000000011,25.47826086956522,118C25.48913043478261,115.09375000000011,25.51086956521739,97.65624999999989,25.52173913043478,94.75C25.532608695652172,91.84374999999989,25.554347826086957,94.75,25.565217391304348,94.75C25.57608695652174,94.75,25.597826086956523,94.75,25.608695652173914,94.75C25.619565217391305,94.75,25.641304347826086,94.75,25.652173913043477,94.75C25.663043478260867,94.75,25.684782608695652,94.75,25.695652173913043,94.75C25.706521739130434,94.75,25.72826086956522,94.75,25.73913043478261,94.75C25.75,94.75,25.771739130434785,94.75,25.782608695652176,94.75C25.793478260869566,94.75,25.815217391304348,94.75,25.82608695652174,94.75C25.83695652173913,94.75,25.858695652173914,94.75,25.869565217391305,94.75C25.880434782608695,94.75,25.90217391304348,94.75,25.91304347826087,94.75C25.92391304347826,94.75,25.945652173913043,94.75,25.956521739130434,94.75C25.967391304347824,94.75,25.98913043478261,94.75,26,94.75" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#37b7f3" d="M25,211C25.01086956521739,211,25.032608695652176,211,25.043478260869566,211C25.054347826086957,211,25.07608695652174,211,25.08695652173913,211C25.09782608695652,211,25.119565217391305,211,25.130434782608695,211C25.141304347826086,211,25.16304347826087,211,25.17391304347826,211C25.184782608695652,211,25.206521739130434,211,25.217391304347824,211C25.228260869565215,211,25.25,211,25.26086956521739,211C25.27173913043478,211,25.293478260869566,211,25.304347826086957,211C25.315217391304348,211,25.336956521739133,211,25.347826086956523,211C25.358695652173914,211,25.380434782608695,211,25.391304347826086,211C25.402173913043477,199.37499999999952,25.42391304347826,129.625,25.434782608695652,118C25.445652173913043,106.375,25.467391304347828,120.90625000000011,25.47826086956522,118C25.48913043478261,115.09375000000011,25.51086956521739,100.5625,25.52173913043478,94.75" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="25" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.043478260869566" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.08695652173913" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.130434782608695" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.17391304347826" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.217391304347824" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.26086956521739" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.304347826086957" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.347826086956523" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.391304347826086" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.434782608695652" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.47826086956522" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.52173913043478" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.565217391304348" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.608695652173914" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.652173913043477" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.695652173913043" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.73913043478261" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.782608695652176" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.82608695652174" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.869565217391305" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.91304347826087" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.956521739130434" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.043478260869566" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.08695652173913" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.130434782608695" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.17391304347826" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.217391304347824" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.26086956521739" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.304347826086957" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.347826086956523" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.391304347826086" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.434782608695652" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.47826086956522" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.52173913043478" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.565217391304348" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.608695652173914" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.652173913043477" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.695652173913043" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.73913043478261" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.782608695652176" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.82608695652174" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.869565217391305" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.91304347826087" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.956521739130434" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.043478260869566" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.08695652173913" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.130434782608695" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.17391304347826" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.217391304347824" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.26086956521739" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.304347826086957" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.347826086956523" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.391304347826086" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.434782608695652" cy="118" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.47826086956522" cy="118" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.52173913043478" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.565217391304348" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.608695652173914" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.652173913043477" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.695652173913043" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.73913043478261" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.782608695652176" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.82608695652174" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.869565217391305" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.91304347826087" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.956521739130434" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="94.75" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.043478260869566" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.08695652173913" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.130434782608695" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.17391304347826" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.217391304347824" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.26086956521739" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.304347826086957" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.347826086956523" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.391304347826086" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.434782608695652" cy="118" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.47826086956522" cy="118" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.52173913043478" cy="94.75" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+<div id="synthese_mois" style="position: relative; height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"><svg height="342" version="1.1" width="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="12.5" y="211" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="211" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,211H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="164.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="164.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.25</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,164.5H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="118" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="118" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.5</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,118H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="71.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="71.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.75</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,71.5H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,25H26" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#fcb322" d="M25,211C25.008333333333333,211,25.025000000000002,211,25.033333333333335,211C25.041666666666668,211,25.058333333333334,211,25.066666666666666,211C25.075,211,25.09166666666667,211,25.1,211C25.108333333333334,211,25.125,211,25.133333333333333,211C25.141666666666666,211,25.158333333333335,211,25.166666666666668,211C25.175,211,25.191666666666666,211,25.2,211C25.208333333333332,211,25.225,211,25.233333333333334,211C25.241666666666667,211,25.258333333333333,211,25.266666666666666,211C25.275,211,25.291666666666668,211,25.3,211C25.308333333333334,211,25.325,211,25.333333333333332,211C25.341666666666665,211,25.358333333333334,211,25.366666666666667,211C25.375,211,25.391666666666666,211,25.4,211C25.40833333333333,211,25.425,211,25.433333333333334,211C25.441666666666666,211,25.458333333333332,211,25.466666666666665,211C25.474999999999998,211,25.491666666666667,211,25.5,211C25.508333333333333,211,25.525000000000002,211,25.533333333333335,211C25.541666666666668,211,25.558333333333334,211,25.566666666666666,211C25.575,211,25.59166666666667,211,25.6,211C25.608333333333334,211,25.625,211,25.633333333333333,211C25.641666666666666,211,25.658333333333335,211,25.666666666666668,211C25.675,211,25.691666666666666,211,25.7,211C25.708333333333332,211,25.725,211,25.733333333333334,211C25.741666666666667,211,25.758333333333333,211,25.766666666666666,211C25.775,211,25.791666666666668,211,25.8,211C25.808333333333334,211,25.825,211,25.833333333333332,211C25.841666666666665,211,25.858333333333334,211,25.866666666666667,211C25.875,211,25.891666666666666,211,25.9,211C25.90833333333333,211,25.925,211,25.933333333333334,211C25.941666666666666,211,25.958333333333332,211,25.966666666666665,211C25.974999999999998,211,25.991666666666667,211,26,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#3cc051" d="M25,211C25.008333333333333,211,25.025000000000002,211,25.033333333333335,211C25.041666666666668,211,25.058333333333334,211,25.066666666666666,211C25.075,211,25.09166666666667,211,25.1,211C25.108333333333334,211,25.125,211,25.133333333333333,211C25.141666666666666,211,25.158333333333335,211,25.166666666666668,211C25.175,211,25.191666666666666,211,25.2,211C25.208333333333332,211,25.225,211,25.233333333333334,211C25.241666666666667,211,25.258333333333333,211,25.266666666666666,211C25.275,211,25.291666666666668,211,25.3,211C25.308333333333334,211,25.325,211,25.333333333333332,211C25.341666666666665,211,25.358333333333334,211,25.366666666666667,211C25.375,211,25.391666666666666,211,25.4,211C25.40833333333333,211,25.425,211,25.433333333333334,211C25.441666666666666,211,25.458333333333332,211,25.466666666666665,211C25.474999999999998,211,25.491666666666667,211,25.5,211C25.508333333333333,211,25.525000000000002,211,25.533333333333335,211C25.541666666666668,211,25.558333333333334,211,25.566666666666666,211C25.575,211,25.59166666666667,211,25.6,211C25.608333333333334,211,25.625,211,25.633333333333333,211C25.641666666666666,211,25.658333333333335,211,25.666666666666668,211C25.675,211,25.691666666666666,211,25.7,211C25.708333333333332,211,25.725,211,25.733333333333334,211C25.741666666666667,211,25.758333333333333,211,25.766666666666666,211C25.775,211,25.791666666666668,211,25.8,211C25.808333333333334,211,25.825,211,25.833333333333332,211C25.841666666666665,211,25.858333333333334,211,25.866666666666667,211C25.875,211,25.891666666666666,211,25.9,211C25.90833333333333,211,25.925,211,25.933333333333334,211C25.941666666666666,211,25.958333333333332,211,25.966666666666665,211C25.974999999999998,211,25.991666666666667,211,26,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#cccccc" d="M25,211C25.008333333333333,211,25.025000000000002,211,25.033333333333335,211C25.041666666666668,211,25.058333333333334,211,25.066666666666666,211C25.075,211,25.09166666666667,211,25.1,211C25.108333333333334,211,25.125,211,25.133333333333333,211C25.141666666666666,211,25.158333333333335,211,25.166666666666668,211C25.175,211,25.191666666666666,211,25.2,211C25.208333333333332,211,25.225,211,25.233333333333334,211C25.241666666666667,211,25.258333333333333,211,25.266666666666666,211C25.275,211,25.291666666666668,211,25.3,211C25.308333333333334,211,25.325,211,25.333333333333332,211C25.341666666666665,211,25.358333333333334,211,25.366666666666667,211C25.375,211,25.391666666666666,211,25.4,211C25.40833333333333,211,25.425,211,25.433333333333334,211C25.441666666666666,211,25.458333333333332,211,25.466666666666665,211C25.474999999999998,211,25.491666666666667,211,25.5,211C25.508333333333333,211,25.525000000000002,211,25.533333333333335,211C25.541666666666668,211,25.558333333333334,211,25.566666666666666,211C25.575,211,25.59166666666667,211,25.6,211C25.608333333333334,211,25.625,211,25.633333333333333,211C25.641666666666666,211,25.658333333333335,211,25.666666666666668,211C25.675,211,25.691666666666666,211,25.7,211C25.708333333333332,211,25.725,211,25.733333333333334,211C25.741666666666667,211,25.758333333333333,211,25.766666666666666,211C25.775,211,25.791666666666668,211,25.8,211C25.808333333333334,211,25.825,211,25.833333333333332,211C25.841666666666665,211,25.858333333333334,211,25.866666666666667,211C25.875,211,25.891666666666666,211,25.9,211C25.90833333333333,211,25.925,211,25.933333333333334,211C25.941666666666666,211,25.958333333333332,211,25.966666666666665,211C25.974999999999998,211,25.991666666666667,211,26,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#37b7f3" d="M25,211C25.008333333333333,211,25.025000000000002,211,25.033333333333335,211C25.041666666666668,211,25.058333333333334,211,25.066666666666666,211C25.075,211,25.09166666666667,211,25.1,211C25.108333333333334,211,25.125,211,25.133333333333333,211C25.141666666666666,211,25.158333333333335,211,25.166666666666668,211C25.175,211,25.191666666666666,211,25.2,211C25.208333333333332,211,25.225,211,25.233333333333334,211C25.241666666666667,211,25.258333333333333,211,25.266666666666666,211C25.275,211,25.291666666666668,211,25.3,211C25.308333333333334,211,25.325,211,25.333333333333332,211C25.341666666666665,211,25.358333333333334,211,25.366666666666667,211C25.375,211,25.391666666666666,211,25.4,211C25.40833333333333,211,25.425,211,25.433333333333334,211C25.441666666666666,211,25.458333333333332,211,25.466666666666665,211C25.474999999999998,211,25.491666666666667,211,25.5,211C25.508333333333333,211,25.525000000000002,211,25.533333333333335,211C25.541666666666668,211,25.558333333333334,211,25.566666666666666,211" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="25" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.033333333333335" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.066666666666666" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.1" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.133333333333333" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.166666666666668" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.2" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.233333333333334" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.266666666666666" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.3" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.333333333333332" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.366666666666667" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.4" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.433333333333334" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.466666666666665" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.5" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.533333333333335" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.566666666666666" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.6" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.633333333333333" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.666666666666668" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.7" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.733333333333334" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.766666666666666" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.8" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.833333333333332" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.866666666666667" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.9" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.933333333333334" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.966666666666665" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="211" r="4" fill="#fcb322" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.033333333333335" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.066666666666666" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.1" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.133333333333333" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.166666666666668" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.2" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.233333333333334" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.266666666666666" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.3" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.333333333333332" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.366666666666667" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.4" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.433333333333334" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.466666666666665" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.5" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.533333333333335" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.566666666666666" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.6" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.633333333333333" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.666666666666668" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.7" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.733333333333334" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.766666666666666" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.8" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.833333333333332" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.866666666666667" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.9" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.933333333333334" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.966666666666665" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="211" r="4" fill="#3cc051" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.033333333333335" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.066666666666666" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.1" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.133333333333333" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.166666666666668" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.2" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.233333333333334" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.266666666666666" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.3" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.333333333333332" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.366666666666667" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.4" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.433333333333334" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.466666666666665" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.5" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.533333333333335" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.566666666666666" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.6" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.633333333333333" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.666666666666668" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.7" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.733333333333334" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.766666666666666" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.8" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.833333333333332" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.866666666666667" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.9" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.933333333333334" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.966666666666665" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="26" cy="211" r="4" fill="#cccccc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.033333333333335" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.066666666666666" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.1" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.133333333333333" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.166666666666668" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.2" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.233333333333334" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.266666666666666" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.3" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.333333333333332" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.366666666666667" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.4" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.433333333333334" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.466666666666665" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.5" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.533333333333335" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="25.566666666666666" cy="211" r="4" fill="#37b7f3" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+<div id="synthese_an" style="position: relative; height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"><svg height="342" version="1.1" width="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+ </div>
+ </div>
+
+<div class="box-graph">
+<div class="blk-title"><span class="title-graphs-evolution" id="graph_evol">Evolution by hour</span></div>
+ <div class="graphiiiii graph01">
+<ul class="menu-graph01">
+<li class="synth_title">Evolution</li>
+<li class="synth_day"><a href="javascript:onmousedown=bar_jour_mois(&#39;jour&#39;)">Day</a></li>
+<li class="synth_month"><a href="javascript:onmousedown=bar_jour_mois(&#39;mois&#39;)">Month</a></li>
+<!--<li id="legendbar"><label title="Label"></label> <ul><li class="couleur2" title="Last week"></li> <li class="couleur3" title="Yesterday"></li> <li class="couleur1" title="Today"></li> <li class="couleur4" title="Project"></li></ul></li>-->
+<li id="legendbar"><span style="color: rgb(55, 183, 243);">Today</span><span style="color: rgb(60, 192, 81);">Yesterday</span><span style="color: rgb(252, 179, 34);">Last week</span></li>
+</ul>
+<div id="bar_jour" style="position: relative; height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="250" version="1.1" width="917" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.175px; top: -0.6px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="19.1875" y="197.375" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M31.6875,197.375H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="19.1875" y="154.28125" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1</tspan></text><path fill="none" stroke="#aaaaaa" d="M31.6875,154.28125H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="19.1875" y="111.1875" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2</tspan></text><path fill="none" stroke="#aaaaaa" d="M31.6875,111.1875H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="19.1875" y="68.09375" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3</tspan></text><path fill="none" stroke="#aaaaaa" d="M31.6875,68.09375H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="19.1875" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4</tspan></text><path fill="none" stroke="#aaaaaa" d="M31.6875,25H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="836.35546875" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-19 23:00:00</tspan></text><text x="657.5403645833334" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-19 18:00:00</tspan></text><text x="478.7252604166667" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-19 13:00:00</tspan></text><text x="299.91015625" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-19 08:00:00</tspan></text><text x="121.09505208333333" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-19 03:00:00</tspan></text><rect x="36.15787760416667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="46.0986328125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="56.039388020833336" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="71.92089843750001" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="81.86165364583334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="91.80240885416669" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="107.68391927083334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="117.62467447916667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="127.5654296875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="143.44694010416666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="153.3876953125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="163.32845052083331" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="179.2099609375" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="189.15071614583334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="199.09147135416666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="214.97298177083334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="224.91373697916669" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="234.8544921875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="250.73600260416666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="260.6767578125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="270.6175130208333" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="286.49902343750006" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="296.43977864583337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="306.38053385416674" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="322.26204427083337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="332.2027994791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="342.14355468750006" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="358.0250651041667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="367.9658203125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="377.90657552083337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="393.78808593750006" y="25" width="6.940755208333333" height="172.375" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="403.72884114583337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="413.66959635416674" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="429.55110677083337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="439.4918619791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="449.43261718750006" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="465.3141276041667" y="154.28125" width="6.940755208333333" height="43.09375" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="475.2548828125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="485.19563802083337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="501.07714843750006" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="511.01790364583337" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="520.9586588541667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="536.8401692708334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="546.7809244791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="556.7216796875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="572.6031901041666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="582.5439453125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="592.4847005208333" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="608.3662109375" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="618.3069661458334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="628.2477213541666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="644.1292317708334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="654.0699869791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="664.0107421875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="679.8922526041666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="689.8330078125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="699.7737630208333" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="715.6552734375" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="725.5960286458334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="735.5367838541666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="751.4182942708334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="761.3590494791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="771.2998046875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="787.1813151041666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="797.1220703125" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="807.0628255208333" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="822.9443359375" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="832.8850911458334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="842.8258463541666" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="858.7073567708334" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="868.6481119791667" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="878.5888671875" y="197.375" width="6.940755208333333" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+<div id="bar_mois" style="position: relative; height: 250px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"><svg height="250" version="1.1" width="917" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.175px; top: -0.6px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="35.875" y="197.375" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M48.375,197.375H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="35.875" y="154.28125" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.25</tspan></text><path fill="none" stroke="#aaaaaa" d="M48.375,154.28125H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="35.875" y="111.1875" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.5</tspan></text><path fill="none" stroke="#aaaaaa" d="M48.375,111.1875H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="35.875" y="68.09375" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0.75</tspan></text><path fill="none" stroke="#aaaaaa" d="M48.375,68.09375H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="35.875" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1</tspan></text><path fill="none" stroke="#aaaaaa" d="M48.375,25H890" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="876.4254032258065" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-31</tspan></text><text x="740.679435483871" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-26</tspan></text><text x="604.9334677419355" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-21</tspan></text><text x="469.1875" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-16</tspan></text><text x="333.4415322580645" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-11</tspan></text><text x="197.69556451612902" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-06</tspan></text><text x="61.94959677419355" y="209.875" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,6.8125)"><tspan dy="4.3984375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2020-07-01</tspan></text><rect x="51.768649193548384" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="59.55594758064516" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="67.34324596774194" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="78.91784274193549" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="86.70514112903226" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="94.49243951612904" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="106.06703629032258" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="113.85433467741935" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="121.64163306451613" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="133.21622983870967" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="141.00352822580643" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="148.7908266129032" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="160.36542338709677" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="168.15272177419354" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="175.9400201612903" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="187.51461693548387" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="195.30191532258064" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="203.0892137096774" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="214.66381048387095" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="222.45110887096772" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="230.23840725806448" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="241.81300403225805" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="249.60030241935482" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="257.3876008064516" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="268.9621975806452" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="276.74949596774195" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="284.5367943548387" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="296.1113911290323" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="303.8986895161291" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="311.68598790322585" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="323.2605846774194" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="331.04788306451616" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="338.8351814516129" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="350.40977822580646" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="358.19707661290323" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="365.984375" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="377.55897177419354" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="385.3462701612903" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="393.1335685483871" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="404.70816532258067" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="412.49546370967744" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="420.2827620967742" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="431.85735887096774" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="439.6446572580645" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="447.4319556451613" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="459.0065524193549" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="466.79385080645164" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="474.5811491935484" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="486.15574596774195" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="493.9430443548387" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="501.7303427419355" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="513.304939516129" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="521.0922379032259" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="528.8795362903226" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="540.4541330645162" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="548.241431451613" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="556.0287298387098" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="567.6033266129033" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="575.3906250000001" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="583.1779233870968" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="594.7525201612904" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="602.5398185483872" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="610.3271169354839" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="621.9017137096774" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="629.6890120967743" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="637.476310483871" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="649.0509072580645" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="656.8382056451613" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="664.625504032258" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="676.2001008064516" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="683.9873991935484" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="691.7746975806451" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="703.3492943548387" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="711.1365927419355" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="718.9238911290322" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="730.4984879032259" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="738.2857862903227" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="746.0730846774194" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="757.6476814516129" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="765.4349798387098" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="773.2222782258065" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="784.796875" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="792.5841733870968" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="800.3714717741935" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="811.9460685483871" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="819.7333669354839" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="827.5206653225806" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="839.0952620967741" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="846.882560483871" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="854.6698588709677" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="866.2444556451613" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#37b7f3" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="874.0317540322582" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#3cc051" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="881.8190524193549" y="197.375" width="4.787298387096773" height="0" rx="0" ry="0" fill="#fcb322" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect></svg><div class="morris-hover morris-default-style" style="display: none;"></div></div>
+ </div>
+</div>
+ <a name="tab2"></a>
+<div class="box-graph">
+<div class="blk-title"><span class="title-graphs-country">Total Visitors by Country</span></div>
+ <div class="box-mapcountry">
+<!--<ul class="menu-graph01">
+ <li>Country</li>
+ </ul>-->
+
+ <div id="world-map" style="height: 300px;"></div></div>
+</div>
+
+</div>
+
+<div class="bloc100">
+
+<div class="box-infos">
+<div class="blk-graph-info blka">
+<div class="blk-title"><span class="title-user-hardware">Device type</span></div>
+	<div class="box-chart">
+	<div class="box-pie-chart">
+	<canvas id="pieChart" height="187" width="375" style="width: 300px; height: 150px;"></canvas>
+	</div>
+	<div class="box-chart-legend">
+	 <ul class="chart-legend clearfix">
+	        </ul>
+	</div>
+	</div>
+</div>
+<div class="blk-graph-info blkb">
+<div class="blk-title"><span class="title-user-system">Operating system</span></div>
+	<div class="box-chart">
+	<div class="box-pie-chart">
+	<canvas id="pieChart1" height="187" width="375" style="width: 300px; height: 150px;"></canvas>
+	</div>
+	<div class="box-chart-legend">
+	 <ul class="chart-legend clearfix">
+	        </ul>
+	</div>
+	</div>
+</div>
+<div class="blk-graph-info blkc">
+<div class="blk-title"><span class="title-user-browser">Browser used</span></div>
+<div class="box-chart">
+	<div class="box-pie-chart">
+        <canvas id="pieChart2" height="187" width="375" style="width: 300px; height: 150px;"></canvas>
+        </div>
+        <div class="box-chart-legend">
+         <ul class="chart-legend clearfix">
+                </ul>
+        </div>
+</div>
+</div>
+<div class="blk-graph-info blkd">
+<div class="blk-title"><span class="title-user-resolution">Screen resolutions</span></div>
+<div class="box-chart">
+	<div class="box-pie-chart">
+        <canvas id="pieChart3" height="187" width="375" style="width: 300px; height: 150px;"></canvas>
+        </div>
+        <div class="box-chart-legend">
+         <ul class="chart-legend clearfix">
+                </ul>
+        </div>
+</div>
+</div>
+</div>
+<!--
+<div class="blk-title">title feed</div>
+<div class="box-feed">
+<ul>
+<li class="blk-feed">
+<div id="resfeed"></div>
+<script src="http://counter3.freecounterstat.com/private/res_geofeed2.js?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh"></script>
+</li>
+</ul>
+</div>
+-->
+
+</div>
+<div class="footer">
+<span id="sfc778ca958cf4225f12464ef01d5a8fb69"><a href="https://www.freecounterstat.com/geozoom.php?c=778ca958cf4225f12464ef01d5a8fb69&amp;base=counter1&amp;type_clic=1" target="_blank"><img border="0" src="./_ _ internet _ website creation_files/counter.php" alt="Click to see detail of visits and stats for this site" title="Click to see detail of visits and stats for this site"></a><img style="border:none" src="./_ _ internet _ website creation_files/pointeur.gif" border="0" width="1" height="1"></span>
+
+<script type="text/javascript">
+(function() {
+	//tabLM
+ var vscf = document.createElement('script'); vscf.type = 'text/javascript';vscf.async = true;
+ vscf.src = 'https://counter1.fcs.ovh/private/counter_async.js?c=778ca958cf4225f12464ef01d5a8fb69&FCS_type=622&FCS_coef=0.6&FCS_rest=&FCS_resc=F0F5F7&FCS_clic=1&FC_visi=0';
+ var vs = document.getElementsByTagName('script')[0]; vs.parentNode.insertBefore(vscf, vs);
+ })();
+</script>
+
+<!-- gAnalytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92768382-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- end gAnalytics -->
+
+<p><a href="https://www.compteurdevisite.com/" title="Compteur de visite" target="_blank">Compteur <span class="fr"></span></a>
+ <a href="https://www.contadorvisitasgratis.com/" title="Contador visitas gratis" target="_blank">Contador <span class="es"></span></a>
+ <a href="https://www.webcontadores.com/" title="Web contadores" target="_blank">Contador <span class="br-pt"></span></a>
+ <a href="https://www.contatoreaccessi.com/" title="Contatore accessi" target="_blank">Contatore <span class="it"></span></a>
+ <a href="https://www.besucherstatistiken.com/" title="Besucherstatistiken" target="_blank">Counter <span class="de"></span></a>
+ <a href="http://www.countergeo.com/" title="Geolocate your visitors" target="_blank">Countergeo: Geolocate your visitors</a></p>
+<script src="./_ _ internet _ website creation_files/blind_countergeo.js.download"></script><img style="border:none" src="./_ _ internet _ website creation_files/pointeur(1).gif" border="0" width="1" height="1">
+
+
+<!-- nav -->
+<div class="menu-mobile">
+<form method="post">
+<select onchange="location.href = &#39;&#39; + this.options[this.selectedIndex].value + &#39;&#39;;">
+<option label="Statistics"></option>
+<option value="index.php" label="Homepage"></option>
+<option value="step_1.php" label="Sign up free"></option>
+<option value="extensions-browser.php" label="Chrome and Opera"></option>
+<option value="contact.php" label="Contact"></option>
+</select>
+</form>
+</div>
+<!-- end nav -->
+</div>
+</div>
+<!-- qrcode -->
+<div class="modal">
+  <input class="modal-open" id="modal-one" type="checkbox" hidden="">
+  <div class="modal-wrap" aria-hidden="true" role="dialog">
+    <label class="modal-overlay" for="modal-one"></label>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2>QR Code</h2>
+        <label class="btn-close" for="modal-one" aria-hidden="true">×</label>
+      </div>
+      <div class="modal-body">
+        <p>
+<img src="./_ _ internet _ website creation_files/qrcode.png" alt="qrcode">  </p>
+      </div>
+      <div class="modal-footer">
+        <label class="btn btn-primary" for="modal-one"> </label>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end qrcode -->
+<div class="mano"></div>
+
+ <script src="./_ _ internet _ website creation_files/Chart.min.js(1).download"></script>
+ <script src="./_ _ internet _ website creation_files/raphael-min_2.1.0.js.download"></script>
+ <script src="./_ _ internet _ website creation_files/morris.min_0.5.1.js.download"></script>
+ <script src="./_ _ internet _ website creation_files/jquery-jvectormap-1.2.2.min.js.download" type="text/javascript"></script>
+ <script src="./_ _ internet _ website creation_files/worldmap.js.download" type="text/javascript"></script>
+
+<script>
+ $(function() {
+    $( "#tabs" ).tabs();
+    $( document ).tooltip();
+ });
+
+
+
+
+  //- PIE CHART -
+  //-------------
+  // Get context with jQuery - using jQuery's .get() method.
+
+   var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+  var pieChart = new Chart(pieChartCanvas);
+  var PieData = [
+  ];
+  var pieOptions = {
+    //Boolean - Whether we should show a stroke on each segment
+    segmentShowStroke: true,
+    //String - The colour of each segment stroke
+    segmentStrokeColor: "#fff",
+    //Number - The width of each segment stroke
+    segmentStrokeWidth: 1,
+    //Number - The percentage of the chart that we cut out of the middle
+    percentageInnerCutout: 50, // This is 0 for Pie charts
+    //Number - Amount of animation steps
+    animationSteps: 100,
+    //String - Animation easing effect
+    animationEasing: "easeOutBounce",
+    //Boolean - Whether we animate the rotation of the Doughnut
+    animateRotate: true,
+    //Boolean - Whether we animate scaling the Doughnut from the centre
+    animateScale: false,
+    //Boolean - whether to make the chart responsive to window resizing
+    responsive: true,
+    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+    maintainAspectRatio: false,
+    //String - A legend template
+    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+    //String - A tooltip template
+//    tooltipTemplate: "<%=value %> <%=label%> users"
+tooltipTemplate: "<%=value %> users"
+  };
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  $("#pieChart").on('inview', function(event, visible) {
+ if(visible){$(function(){pieChart.Doughnut(PieData, pieOptions);});}
+ else{$("#pieChart").empty();}
+ });
+  //pieChart.Doughnut(PieData, pieOptions);
+
+
+  var pieChartCanvas1 = $("#pieChart1").get(0).getContext("2d");
+  var pieChart1 = new Chart(pieChartCanvas1);
+  var PieData1 = [
+  ];
+
+ $("#pieChart1").on('inview', function(event, visible) {
+ if(visible){$(function(){pieChart1.Doughnut(PieData1, pieOptions);});}
+ else{$("#pieChart1").empty();}
+ });
+
+  var pieChartCanvas2 = $("#pieChart2").get(0).getContext("2d");
+  var pieChart2 = new Chart(pieChartCanvas2);
+  var PieData2 = [
+  ];
+
+$("#pieChart2").on('inview', function(event, visible) {
+ if(visible){$(function(){pieChart2.Doughnut(PieData2, pieOptions);});}
+ else{$("#pieChart2").empty();}
+ });
+
+//pieChart2.Doughnut(PieData2, pieOptions);
+var pieChartCanvas3 = $("#pieChart3").get(0).getContext("2d");
+var pieChart3 = new Chart(pieChartCanvas3);
+var PieData3 = [
+  ];
+  $("#pieChart3").on('inview', function(event, visible) {
+ if(visible){$(function(){pieChart3.Doughnut(PieData3, pieOptions);});}
+ else{$("#pieChart3").empty();}
+ });
+//pieChart3.Doughnut(PieData3, pieOptions);
+
+var tab_code_marker=new Array();
+var tab_label=new Array();
+tab_label['IN']='India<br>Total : 5<br>Online : 1';
+tab_label['FR']='France<br>Total : 1<br>Online : 1';
+
+var visitorsData = {
+"IN": 5
+,"FR": 1
+        };
+//  $('#map1').vectorMap('set', 'focus', code);
+   	$("#world-map").on('inview', function(event, visible) {
+    if (visible) {
+   	$(function() {
+           $('#world-map').vectorMap({
+                map : 'world_mill_en',
+                zoomMax:15,
+                backgroundColor : "transparent",
+                //backgroundColor : "#cccccc",
+	//	focusOn: {
+        //        region: 'BR',
+        //        scale: 4
+        //        },
+
+                regionStyle : {
+                        initial : {
+                                fill : '#e4e4e4',
+                                "fill-opacity" : 1,
+                                stroke : 'none',
+                                "stroke-width" : 0,
+                                "stroke-opacity" : 1
+                        }
+                },
+                series : {
+                        regions : [{
+                                values : visitorsData,
+                                //scale : ["#92c1dc", "#ebf4f9"],
+				 scale:{"5": "#c81414"
+,"1": "#74ffb7"
+},
+				 legend: {horizontal: true,title: 'Color' },
+                                normalizeFunction : 'polynomial'
+                        }]
+                },
+                onRegionLabelShow : function(e, el, code) {
+                        if ( typeof visitorsData[code] != "undefined")
+                               // el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
+				//el.html(el.html()+"<table><tr><td><img src=\"http://counter3.freecounterstat.com:8080/flag4/perneo/"+code+".png\"></td><td valign=\"middle\">"+visitorsData[code]+"</td></tr></table>");
+				el.html(affiche_label("region",el,code));
+
+                },
+                onMarkerLabelShow: function(e, el, code) {
+					el.html(affiche_label("marker",el,code));
+				},
+		//setFocus:{region: 'CA',scale:10}
+
+        });
+        });//fin ready inview jvector
+      	}
+      	else {
+      	$("#world-map").empty();
+      	}
+	});
+        function affiche_label(type,label,code){
+if(type=="marker"){code_iso=tab_code_marker[code].substr(0,2);code_label=tab_code_marker[code];}
+else{code_iso=code;code_label=code;}
+if(tab_label[code_label]==undefined){tab_label[code_label]=label.html();}
+//var res="<table><tr><td><img src=\"http://geo1.geocompteur.com:8080/flag4/perneo/"+code+".png\"></td><td valign=\"middle\">"+ label.html()+"</td></tr></table>";
+var res="<table><tr><td><img src=\"https://counter3.freecounterstat.com:8080/flag4/perneo/"+code_iso+".png\"></td><td valign=\"middle\">"+tab_label[code_label]+"</td></tr></table>";
+return(res);
+}
+
+
+	//$('#world-map').vectorMap('set', 'focus', 'IN');
+
+
+        var line1 = new Morris.Line({
+                element : 'synthese_jour',
+                resize : true,
+                data : [
+ {    y : '2020-07-19 01:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 02:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 03:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 04:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 05:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 06:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 07:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 08:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 09:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 10:00:00',
+                        item1 : 0,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 0,
+                }, {    y : '2020-07-19 11:00:00',
+                        item1 : 4,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 4,
+                }, {    y : '2020-07-19 12:00:00',
+                        item1 : 4,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 4,
+                }, {    y : '2020-07-19 13:00:00',
+                        item1 : 5,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 14:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 15:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 16:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 17:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 18:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 19:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 20:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 21:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 22:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 23:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }, {    y : '2020-07-19 24:00:00',
+                        item1 : null,
+                        item2 : 0,
+			item3 : 0,
+			item4 : 5,
+                }                ],
+                 xkey : 'y',
+                ykeys : ['item1','item4', 'item2','item3'],
+		//ykeys : ['item1', 'item4', 'item2','item3'],
+                xLabelFormat: function(d) {
+                	 return d.getHours()+':00';
+        		},
+        		lineColors: ['#37B7F3','#CCCCCC','#3CC051','#FCB322'],
+		        pointFillColors: ['#37B7F3','#CCCCCC','#3CC051','#FCB322'],
+
+                labels : ["Today","Project","Yesterday","Last week"],
+    hideHover: 'auto',
+   dateFormat: function (x) { return new Date(x).getHours()+':00'; }
+        });
+line1.options.labels.forEach(function(label, i){
+    var legendItem = $('<span></span>').text(label).css('color', line1.options.lineColors[i])
+    $('#legendline').append(legendItem);
+})
+//$('#res_synthese').html($('#synthese_jour').html());
+
+var area2 = new Morris.Line({
+                element : 'synthese_mois',
+                resize : true,
+                data : [
+ {    y : '2020-07-01',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-02',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-03',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-04',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-05',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-06',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-07',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-08',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-09',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-10',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-11',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-12',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-13',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-14',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-15',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-16',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-17',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-18',
+                        item1 : 0,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-19',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-20',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-21',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-22',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-23',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-24',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-25',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-26',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-27',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-28',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-29',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-30',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }, {    y : '2020-07-31',
+                        item1 : null,
+			item4 : 0,
+                        item2 : 0,
+                         item3 : 0
+                }                ],
+                 xkey : 'y',
+                ykeys : ['item1','item4','item2','item3'],
+                xLabelFormat: function(d) {
+        	  	return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+          		},
+         		lineColors: ['#37B7F3','#CCCCCC','#3CC051','#FCB322'],
+		        pointFillColors: ['#37B7F3','#CCCCCC','#3CC051','#FCB322'],
+
+
+                labels : ["This month","Project","Last month","This time last year" ],
+    hideHover: 'auto',
+   dateFormat: function (x) { return new Date(x).toDateString(); }
+   //dateFormat: function (x) { return new Date(x).toLocaleDateString(); }
+
+        });
+$('#synthese_mois').css('display','none');
+
+var line_an = new Morris.Line({
+                element : 'synthese_an',
+                resize : true,
+                data : [
+                ],
+                 xkey : 'y',
+                ykeys : ['item1'],
+                xLabelFormat: function(d) {
+        	  	return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+          		},
+         		lineColors: ['#37B7F3'],
+		        pointFillColors: ['#37B7F3'],
+
+
+                labels : ["TRAD_EVOL_AN"],
+    hideHover: 'auto',
+   dateFormat: function (x) { return new Date(x).toDateString(); }
+   //dateFormat: function (x) { return new Date(x).toLocaleDateString(); }
+
+        });
+$('#synthese_an').css('display','none');
+
+var bar1 = new Morris.Bar({
+                element : 'bar_jour',
+                resize : true,
+                parseTime: false,
+                data : [
+ {    y : '2020-07-19 01:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 02:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 03:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 04:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 05:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 06:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 07:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 08:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 09:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 10:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 11:00:00',
+			 item1 : 4,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 12:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 13:00:00',
+			 item1 : 1,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 14:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 15:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 16:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 17:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 18:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 19:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 20:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 21:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 22:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 23:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }, {    y : '2020-07-19 24:00:00',
+			 item1 : 0,
+        	         item2 : 0,
+                         item3 : 0
+	
+                }                ],
+                 xkey : 'y',
+                ykeys : ['item1', 'item2','item3'],
+                barColors: ['#37B7F3','#3CC051','#FCB322'],
+
+
+                //xLabelFormat: function(d) {
+        	  	//return new Date(d).toDateString();
+          		//},
+                labels : ["Today", "Yesterday", "Last week"],
+                //labels : ["Last week", "Yesterday","Today" ],
+    		hideHover: 'auto',
+		dateFormat: function (x) { return new Date(x).toDateString(); },
+		hoverCallback: function(index, options, content) {return(content);}
+        });
+
+bar1.options.labels.forEach(function(label, i){
+    var legendItem = $('<span></span>').text(label).css('color', bar1.options.barColors[i])
+    $('#legendbar').append(legendItem);
+});
+
+
+var bar2 = new Morris.Bar({
+                element : 'bar_mois',
+                resize : true,
+                parseTime: false,
+                data : [
+ {    y : '2020-07-01',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-02',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-03',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-04',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-05',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-06',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-07',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-08',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-09',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-10',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-11',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-12',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-13',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-14',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-15',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-16',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-17',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-18',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-19',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-20',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-21',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-22',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-23',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-24',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-25',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-26',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-27',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-28',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-29',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-30',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }, {    y : '2020-07-31',
+                        item1 : 0,
+                        item2 : 0,
+                        item3 : 0
+                }                ],
+                 xkey : 'y',
+                ykeys : ['item1', 'item2', 'item3'],
+                labels : ["This month","Last month","This time last year"],
+                barColors: ['#37B7F3','#3CC051','#FCB322'],
+		hideHover: 'auto',
+		dateFormat: function (x) { return new Date(x).toDateString(); },
+                hoverCallback: function(index, options, content) {return(content);}
+        });
+$('#bar_mois').css('display','none');
+
+function synth_jour_mois(t)
+{
+ if(t=='jour'){
+ $("#synthese_mois").css("display", "none");
+ $("#synthese_jour").css("display", "block");
+ $("#synthese_an").css("display", "none");
+ $("#graph_cumul").html('Accumulated hourly');
+ $('#legendline').html('');
+ line1.options.labels.forEach(function(label, i){
+    var legendItem = $('<span></span>').text(label).css('color', line1.options.lineColors[i])
+    $('#legendline').append(legendItem);
+ })
+ }
+ else if(t=='an'){
+ $("#synthese_jour").css("display", "none");
+ $("#synthese_mois").css("display", "none");
+ $("#synthese_an").css("display", "block");
+ $("#graph_cumul").html('Day accumulated by day');
+ $('#legendline').html('');
+ line_an.options.labels.forEach(function(label, i){
+    var legendItem = $('<span></span>').text(label).css('color', line_an.options.lineColors[i])
+    $('#legendline').append(legendItem);
+ })
+ }
+ else{
+ $("#synthese_jour").css("display", "none");
+ $("#synthese_mois").css("display", "block");
+ $("#synthese_an").css("display", "none");
+ $("#graph_cumul").html('Day accumulated by day');
+ $('#legendline').html('');
+ area2.options.labels.forEach(function(label, i){
+    var legendItem = $('<span></span>').text(label).css('color', area2.options.lineColors[i])
+    $('#legendline').append(legendItem);
+ })
+ }
+}
+function bar_jour_mois(t)
+{
+ $('#legendbar').html('');
+ if(t=='jour'){
+ $("#bar_mois").css("display", "none");
+ $("#bar_jour").css("display", "block");
+ $("#graph_evol").html('Evolution by hour');
+  bar1.options.labels.forEach(function(label, i){
+  var legendItem = $('<span></span>').text(label).css('color', bar1.options.barColors[i])
+  $('#legendbar').append(legendItem);
+  });
+ }
+ else{
+ $("#bar_jour").css("display", "none");
+ $("#bar_mois").css("display", "block");
+ $("#graph_evol").html('Evolution by day');
+  bar2.options.labels.forEach(function(label, i){
+  var legendItem = $('<span></span>').text(label).css('color', bar2.options.barColors[i])
+  $('#legendbar').append(legendItem);
+  });
+ }
+}
+function aff_div(n,m){
+nav = navigator.appName;
+if(n==2 || n==3){document.location='geozoom.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&base=counter3&tab='+n+'&month='+m+'#tab'+n;
+}
+else if(n==6){affiche_stat();}
+else{
+document.location='geozoom.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&base=counter3&tab='+n+'&month='+m;
+}
+}
+
+function affich_city(k){
+if(document.getElementById('ci_'+k).style.display=="none"){
+document.getElementById('ci_'+k).style.display="table-row";
+}
+else{
+document.getElementById('ci_'+k).style.display="none";
+}
+}
+
+function zoom_city(lat,lon,iso){
+//t=getScrollXY();
+//sc=t[1];
+sc= document.getElementById('liste_pays_map').scrollTop;
+document.location='geozoom.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&base=counter3&tab=1&month=&lat='+lat+'&lon='+lon+'&iso='+iso+'&sc='+sc+'#zoomcity';
+}
+function getScrollXY() {
+  var scrOfX = 0, scrOfY = 0;
+  if( typeof( window.pageYOffset ) == 'number' ) {
+    //Netscape compliant
+    scrOfY = window.pageYOffset;
+    scrOfX = window.pageXOffset;
+  } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+    //DOM compliant
+    scrOfY = document.body.scrollTop;
+    scrOfX = document.body.scrollLeft;
+  } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+    //IE6 standards compliant mode
+    scrOfY = document.documentElement.scrollTop;
+    scrOfX = document.documentElement.scrollLeft;
+  }
+  return [ scrOfX, scrOfY ];
+
+}
+</script>
+<div class="nav_flags">
+<!-- menu flags -->
+<ul>
+<li class="fl-mobile"><span class="fl-en"></span> <ul>
+<li></li>
+<li><a class="fl-fr" href="https://www.compteurdevisite.com/" rel="nofollow"></a></li>
+<li><a class="fl-it" href="https://www.contatoreaccessi.com/" rel="nofollow"></a></li>
+<li><a class="fl-es" href="https://www.contadorvisitasgratis.com/" rel="nofollow"></a></li>
+<li><a class="fl-pt-br" href="https://www.webcontadores.com/" rel="nofollow"></a></li>
+<li><a class="fl-de" href="https://www.besucherstatistiken.com/" rel="nofollow"></a></li>
+</ul>
+</li>
+</ul></div>
+
+
+
+</div><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><iframe src="./_ _ internet _ website creation_files/chrome_false.html" style="display: none;"></iframe></body></html>
