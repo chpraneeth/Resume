@@ -1,0 +1,234 @@
+function EcrireCookiecountergeo(nom,valeur,nombre)
+{
+   var argv=EcrireCookiecountergeo.arguments;
+   var argc=EcrireCookiecountergeo.arguments.length;
+   var ladate=new Date(); 
+   ladate.setTime(ladate.getTime()+Number(nombre));
+   var path=("/") ;
+   var domain=(argc > 4) ? argv[4] : null;
+   var secure=(argc > 5) ? arg[5] : false;
+   document.cookie=nom+"="+escape(valeur)+
+      "; expires="+ladate+
+       ((path==null) ? "" : ("; path="+path))+
+      ((domain==null) ? "" : ("; domain="+domain))+
+      ((secure==true) ? "; secure" : "");
+}
+function GetCookiecountergeo (name) {
+var arg = name + "=";
+var alen = arg.length;
+var clen = document.cookie.length;
+var i = 0;
+while (i < clen) {
+var j = i + alen;
+if (document.cookie.substring(i, j) == arg)
+return getCookieValcountergeo (j);
+i = document.cookie.indexOf(" ", i) + 1;
+if (i == 0) break;
+}
+return null;
+}
+function getCookieValcountergeo (offset) {
+var endstr = document.cookie.indexOf (";", offset);
+if (endstr == -1)
+endstr = document.cookie.length;
+return unescape(document.cookie.substring(offset, endstr));
+}
+var date_init=new Date();
+var test_cookie_value_countergeo;
+var test_cookie_value_countergeo_nv;
+var init_countergeo=1;
+var init_countergeo_nv=1;
+var acceptcookiecountergeo;
+
+//tester si accepte cookies
+acceptcookiecountergeo = GetCookiecountergeo('acceptcookiecountergeo');
+if(acceptcookiecountergeo == null){
+//date=new Date();
+//date.setTime(date.getTime()+1000);
+EcrireCookiecountergeo('acceptcookiecountergeo','ok','31536000000');
+}
+acceptcookiecountergeo = GetCookiecountergeo('acceptcookiecountergeo');
+
+if (acceptcookiecountergeo=='ok') {
+test_cookie_value_countergeo = GetCookiecountergeo('countergeo');
+test_cookie_value_countergeo_nv = GetCookiecountergeo('countergeo_nv');
+   if(test_cookie_value_countergeo == null){
+   init_countergeo=0;
+   test_cookie_value_countergeo ='24330ceac66fb8a8f8eca88cfeeaeb6f';
+   EcrireCookiecountergeo('countergeo',test_cookie_value_countergeo,'52418000');
+   }
+   if(test_cookie_value_countergeo_nv==null){
+   test_cookie_value_countergeo_nv ='24330ceac66fb8a8f8eca88cfeeaeb6f';
+   EcrireCookiecountergeo('countergeo_nv',test_cookie_value_countergeo_nv,'31536000000');
+   init_countergeo_nv=0;
+   }
+}
+else {
+var test_cookie_value_countergeo="no";
+acceptcookiecountergeo='no';
+}
+
+
+var html_res1='';
+html_res1+='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="180" height="240" id="countergeomovie">';
+html_res1+='<param name="movie" value="https://geo1.geocontador.com:4433/swf/geocontador.swf?&lg=en&compte=1148d394c3e3c68bc001de52660b9e51&id=4028be336f05e498554bf377df22dd4a&logged=ok&id_compte=40&base_log=geo1&lib=standard&cd=51.png&bg=51.png&fl=default&ts=180x240&tf=Arial&ci=F7FF14&ca=FFFFFF&pe=total&add=ok&ecart_gmt=7200&path=017003&base=geo1&pays=fr&ttot=Total&geo_ISO=IN&geo_PAYS=India&clickTag=geocontador.com&u=1595143582&referer='+escape(ref)+'">';
+html_res1+='<param name="quality" value="high">';
+html_res1+='<param name="allowScriptAccess" value="always">';
+html_res1+='<param name="clickTag" value="geocontador.com">';
+html_res1+='<!--[if lte IE 9 ]><param name="wmode" value="transparent"> <![endif]-->';
+html_res1+='<!--[if IE 9 ]><param name="wmode" value="opaque"> <![endif]-->';
+
+html_res1+='<embed src="https://geo1.geocontador.com:4433/swf/geocontador.swf?&lg=en&compte=1148d394c3e3c68bc001de52660b9e51&id=4028be336f05e498554bf377df22dd4a&logged=ok&id_compte=40&base_log=geo1&lib=standard&cd=51.png&bg=51.png&fl=default&ts=180x240&tf=Arial&ci=F7FF14&ca=FFFFFF&pe=total&add=ok&ecart_gmt=7200&path=017003&base=geo1&pays=fr&ttot=Total&geo_ISO=IN&geo_PAYS=India&clickTag=geocontador.com&u=1595143582&referer='+escape(ref)+'" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="180" height="240" wmode="transparent" allowScriptAccess="always" name="countergeomovie" clickTag="geocontador.com"></embed>';
+html_res1+='</object>';
+
+var html_res2='<a href="http://www.geocontador.com/redirect.php?c=1148d394c3e3c68bc001de52660b9e51" target="_blank"><img src="https://geo1.geocontador.com/private/geocontador.php?&lg=en&compte=1148d394c3e3c68bc001de52660b9e51&id=4028be336f05e498554bf377df22dd4a&logged=ok&id_compte=40&base_log=geo1&lib=standard&cd=51.png&bg=51.png&fl=default&ts=180x240&tf=Arial&ci=F7FF14&ca=FFFFFF&pe=total&add=ok&ecart_gmt=7200&path=017003&base=geo1&pays=fr&ttot=Total&geo_ISO=IN&geo_PAYS=India&clickTag=geocontador.com&u=1595143582&nostat=1" border="0"></a>';
+
+
+
+var blindres=true;
+var nb_couleur;
+if(screen.colorDepth!=undefined){
+ nb_couleur=screen.colorDepth;
+}
+else if(screen.pixelDepth!=undefined){
+ nb_couleur=screen.pixelDepth;
+}
+else{
+ nb_couleur=0;
+}
+var browser = parseInt(navigator.appVersion);
+if (browser>=4){var resolution = (screen.height + "*" + screen.width)}
+else{var resolution;}
+if (navigator.appName.indexOf("Microsoft Internet Explorer")!=-1){langue=navigator.systemLanguage;}
+else{langue=navigator.language;}
+langue=langue.substring(0,2);
+var date_countergeo = new Date();
+var ref=document.referrer;
+
+if((ref.indexOf("geovisite.com")!=-1 || ref.indexOf("geo20120530.com")!=-1 || ref.indexOf("mytictac.com")!=-1 || ref.indexOf("//counter1.")!=-1 || ref.indexOf("//geo1.")!=-1) && ref.indexOf(".swf")!=-1 && ref.indexOf("referer")!=-1){
+refp=unescape(ref);
+tt=refp.split("referer=");
+tt=tt[1].split("&");
+refp=tt[0];
+}
+else{
+refp=ref;
+}
+var bro_nom="chrome";
+var c_title=str_replace2(document.title,'|',' ');
+c_title=str_replace2(c_title,';',' ');
+c_title="";
+with(document) write('<img style="border:none" src = "https://geo1.geocontador.com:4433/private/pointeur/pointeur.gif?|1148d394c3e3c68bc001de52660b9e51|'+escape(resolution)+'|'+escape(langue)+'|'+escape(nb_couleur)+'|'+Math.round(date_countergeo.getTime()/1000)+'|'+test_cookie_value_countergeo+'|computer|windows|10|chrome|83|India|IN|17.974001|79.599503|Warangal||7200|'+init_countergeo_nv+'|1595143582|'+acceptcookiecountergeo+'|'+escape(document.URL)+'|'+escape(refp)+'|js|103.57.133.39||'+escape(c_title)+'|&init='+date_init.getTime()+'" border="0"  width="1" height="1">');
+function detectFlash()
+{
+}
+
+function detectFlashiii()
+{
+	if( navigator.mimeTypes.length > 0 )
+	{
+	if(navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin != null){return(true);}else{return(false);}
+	
+	}
+	else if( window.ActiveXObject )
+	{
+		try
+		{
+	new ActiveXObject( "ShockwaveFlash.ShockwaveFlash" );
+	return(true);
+		}
+		catch( oError )
+		{
+	return(false);
+		}
+	}
+	else
+	{
+	return(false);
+	}
+}
+if(detectFlash()==true && blindres==false){
+document.write(html_res1);
+}
+else{
+if(blindres==false){
+ document.write(html_res2);
+}
+}
+
+
+
+//window.onload = function()
+//{
+// for (i = 0; i < document.links.length; i++)
+// {
+//  if(document.links.item(i).href.indexOf('#')==-1)
+//  {
+//   document.links.item(i).onclick = function()
+//   {
+//    return count_link(this.id,this.href);
+//   }
+//  }
+// }
+//}
+//document.write('<div id="ResGeoImg"></div>');
+function count_link(lnk,to)
+{
+ dateu=new Date();
+ document.getElementById("ResGeoImg").innerHTML='<img src="https://geo1.geocontador.com/private/geocompteur.php?c=1148d394c3e3c68bc001de52660b9e51&desti='+escape(to)+'&md5='+test_cookie_value_geocompteur+'&inv='+init_geocompteur_nv+'&acc='+acceptcookiegeocompteur+'&u='+dateu.getTime()+'">';
+}
+
+
+function count_linkiiii(lnk,to)
+{
+ dateu=new Date();
+ var xjs=document.createElement('script');
+ xjs.src='http://geo1.geocontador.com/private/geocompteur.php?c=1148d394c3e3c68bc001de52660b9e51&desti='+to+'&u='+dateu.getTime();
+ document.getElementsByTagName('head')[0].appendChild(xjs);
+}
+
+
+function count_linkiiiii(lnk,to)
+{
+ dateu=new Date();
+ var xhr_object = null;
+ if(window.XMLHttpRequest)
+ xhr_object = new XMLHttpRequest();
+ else if(window.ActiveXObject)
+ xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+ else {return}
+ xhr_object.open("GET", "http://geo1.geocontador.com/private/geocompteur.php?c=1148d394c3e3c68bc001de52660b9e51&desti="+to+"&u="+dateu.getTime(), false);
+ xhr_object.send(null);
+}
+
+
+function str_replace2(SRs, SRt, SRu) {
+  SRRi = SRs.indexOf(SRt);
+  SRRr = '';
+  if (SRRi == -1) return SRs;
+  SRRr += SRs.substring(0,SRRi) + SRu;
+  if ( SRRi + SRt.length < SRs.length)
+    SRRr += str_replace2(SRs.substring(SRRi + SRt.length, SRs.length), SRt, SRu);
+  return SRRr;
+}
+
+if (window.navigator.appVersion.match(/Chrome/)) {
+    function chrome_flash_redraw() {
+        var objects = document.getElementsByTagName('object');
+
+        for (var i = 0, j = objects.length; i < j; i++) {
+	    objects[i].style.display = 'inline-block';
+            objects[i].style.marginLeft = 'auto';
+            objects[i].style.marginRight = 'auto';
+        }
+
+
+    }
+
+    if (window.addEventListener) {
+        window.addEventListener('load', chrome_flash_redraw, false);
+    } else if (window.attachEvent) {
+        window.attachEvent('onload', chrome_flash_redraw);
+    }
+}
+

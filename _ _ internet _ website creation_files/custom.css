@@ -1,0 +1,171 @@
+a{
+color: rgba(0,0,0,.5);
+}
+a.active{
+text-decoration:underline;
+}
+
+.divchartdetailiiiii{
+min-height:100%;max-width:100%;min-width:90%;
+}
+
+.modal-dialog {
+    max-width: 90%;
+    margin:5%;
+}
+
+@media (min-width: 576px){
+.modal-dialog {
+    max-width: 90%;
+    margin:5%;
+}
+}
+
+canvas{
+    margin: 0 auto;
+    }
+
+.donut-area{
+    height:calc(100% - 62px)
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+#form1 label{
+margin:0px;
+padding:0px;
+font-size:10px;
+}
+#form1 li{
+padding-left:8px;
+}
+#form1 select.form-control,#form1 input.form-control{
+padding:2px;
+height:30px;
+}
+#ok-date{
+
+padding-left:4px;
+padding-right:4px;
+padding:4px;
+}
+
+
+.chart-legend li span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.chart-legend{
+/* min-height:300px;*/
+height:300px;
+/*height:100%;*/
+  overflow:auto;
+ margin-top:50px;
+}
+
+.chart-legend li{
+  cursor:pointer;
+  list-style: none;
+  font-size:12px;
+}
+
+.strike{
+     text-decoration: line-through !important;
+}
+
+.float-left{
+  float:left;
+}
+
+.bgnavi{
+background-color:#f8f9fa!important;
+border-bottom:1px solid #ccc;
+height:75px;
+padding:0px;
+margin:0px;
+}
+
+@media (max-width: 890px){
+nav{
+position:fixed!important;
+top:0px;
+}
+.navbar{
+width:100%;
+}
+#PageStats{
+margin-top:75px;
+}
+#navbarSupportedContent{
+position: fixed!important;
+left:0px;
+top:50px;
+background-color:#FFF;
+min-width:150px;
+padding-left:8px;
+}
+#navbarSupportedContenticon{
+position: fixed!important;
+left:30%;
+top:0px;
+}
+#btnavbarSupportedContentperiod{
+position: fixed!important;
+right:15px;
+top:8px;
+}
+#navbarSupportedContentperiod{
+position: fixed!important;
+right:0px;
+top:50px;
+background-color:#FFF;
+}
+}

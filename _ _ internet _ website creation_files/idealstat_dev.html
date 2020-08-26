@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<!-- saved from url=(0122)https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>IdealStats</title>
+<link rel="stylesheet" href="./bootstrap.min.css">
+<link href="./all.css" rel="stylesheet">
+
+<script src="./jquery.min.js.download"></script><style></style>
+<script src="./jquery-ui.min.js.download"></script>
+<script src="./Chart.bundle.min.js.download"></script>
+<script src="./Chart.min.js.download"></script>
+<script src="./chartjs-plugin-colorschemes.min.js.download"></script>
+<script src="./chartjs-plugin-style.min.js.download"></script>
+
+<script src="./jquery.tablesorter.js.download"></script>
+<script src="./jquery.tablesorter.widgets.js.download"></script>
+
+<!-- pager plugin -->
+<!--<link rel="stylesheet" href="/ext_dev/tablesorter/css/jquery.tablesorter.pager.css">
+<script src="/ext_dev/tablesorter/js/jquery.tablesorter.pager.js"></script>-->
+
+<link rel="stylesheet" href="./Chart.css">
+<link rel="stylesheet" href="./theme.bootstrap_4.css">
+<link rel="stylesheet" href="./theme.default.css">
+<link rel="stylesheet" href="./custom.css">
+
+<script src="./bootstrap.min.js.download"></script>
+<!--
+<script type="text/javascript" src="js/dom-drag.js"></script>
+-->
+<style>body.tablesorter-disableSelection { -ms-user-select: none; -moz-user-select: -moz-none;-khtml-user-select: none; -webkit-user-select: none; user-select: none; }.tablesorter-resizable-container { position: relative; height: 1px; }.tablesorter-resizable-handle { position: absolute; display: inline-block; width: 8px;top: 1px; cursor: ew-resize; z-index: 3; user-select: none; -moz-user-select: none; }</style><style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+
+<body>
+     <div id="content">
+     <!-- bloc stats -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="">
+<div class="container" style="max-width:100%;">
+  <div class="col-md-6 col-sm-3 col-2 bgnav" style="padding-left:0;padding-right:0;">
+    <button id="btnavbarSupportedContent" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    <!--    <a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=9&base=counter3&tg=2&u=1595143549&d1=&d2=&syntype=&nb=10&ecart_gmt=21600&title=&YM=">Yearly</a>-->
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=2&amp;base=counter3&amp;tg=2&amp;u=1595143549#" id="navbarMonthly" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Monthly
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	<a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=visitor" class="dropdown-item">Visitor</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=new_visitor" class="dropdown-item">New visitor</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=page" class="dropdown-item">Page</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=engine" class="dropdown-item">Engine</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=referer" class="dropdown-item">Referer</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=direct" class="dropdown-item">Direct</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=hit" class="dropdown-item">Hit</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=1&amp;syntype=referersocial" class="dropdown-item">Referersocial</a>	</div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=2&amp;base=counter3&amp;tg=2&amp;u=1595143549#" id="navbarDaily" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Daily
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=visitor" class="dropdown-item">Visitor</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=new_visitor" class="dropdown-item">New visitor</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=page" class="dropdown-item">Page</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=engine" class="dropdown-item">Engine</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=referer" class="dropdown-item">Referer</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=direct" class="dropdown-item">Direct</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=hit" class="dropdown-item">Hit</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=2&amp;syntype=referersocial" class="dropdown-item">Referersocial</a>        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=2&amp;base=counter3&amp;tg=2&amp;u=1595143549#" id="navbarGeolocate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Geolocate
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=3&amp;syntype=map" class="dropdown-item">Map</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=3&amp;syntype=pays" class="dropdown-item">Country</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=3&amp;syntype=city" class="dropdown-item">City</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=3&amp;syntype=langue" class="dropdown-item">Language browsers</a>        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=2&amp;base=counter3&amp;tg=2&amp;u=1595143549#" id="navbarOS" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          OS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=4&amp;syntype=hardwaresystem" class="dropdown-item">Platform</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=4&amp;syntype=system" class="dropdown-item">Os systems</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=4&amp;syntype=browser" class="dropdown-item">Browsers</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=4&amp;syntype=resolution" class="dropdown-item">Resolution</a>        </div>
+    </li>
+
+    <li class="nav-item"><a class="nav-link" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=7&amp;base=counter3&amp;tg=2&amp;u=1595143549&amp;d1=&amp;d2=&amp;syntype=&amp;nb=10&amp;ecart_gmt=21600&amp;title=">Provider</a></li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=2&amp;base=counter3&amp;tg=2&amp;u=1595143549#" id="navbarTrafficOrigin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Traffic Origin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=5&amp;syntype=engine" class="dropdown-item">Engine</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=5&amp;syntype=referer" class="dropdown-item">Referer</a><a href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;base=counter3&amp;ecart_gmt=21600&amp;d1=&amp;d2=&amp;nb=10&amp;tg=2&amp;tab=5&amp;syntype=referersocial" class="dropdown-item">Social</a>        </div>
+    </li>
+
+    <li class="nav-item"><a class="nav-link" href="https://counter3.idealstats.com/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&amp;tab=6&amp;base=counter3&amp;tg=2&amp;u=1595143549&amp;d1=&amp;d2=&amp;syntype=&amp;nb=10&amp;ecart_gmt=21600&amp;title=">Pages</a></li>
+ </ul>
+ </div>
+</div>
+<div class="col-md-2 col-sm-6 col-6 text-left bgnav" style="padding-top:15px;" id="navbarSupportedContenticon">
+<ul class="list-inline">
+ </ul>
+</div>
+<div class="col-md-4 col-sm-3 col-2 bgnav" style="">
+ </div>
+
+</div>
+</nav>
+<div id="PageStats">
+   
+    <div class="ContentStats">
+
+<script>
+var effectColors = {
+        highlight: 'rgba(255, 255, 255, 0.75)',
+        shadow: 'rgba(0, 0, 0, 0.5)',
+        innerglow: 'rgba(255, 255, 0, 0.5)',
+        outerglow: 'rgb(255, 255, 0)'
+};
+var chartColors = {
+        red: 'rgb(255, 99, 132)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)',
+        bleuclair:'rgb(102,204,255)',
+        gris:'rgb(204,204,204)',
+	bleufonce:'rgb(68,136,206)',
+	bleu:'rgb(55,183,243)',
+	vert:'rgb(60,192,81)',
+	orange:'rgb(252,179,34)',
+	
+};
+</script>
+<!--
+<div class="row" style="margin:0px;padding:8px;">
+ <ul class="list-inline">
+  <li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=visitor" class="active">Visitor</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=new_visitor" >New visitor</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=page" >Page</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=engine" >Engine</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=referer" >Referer</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=direct" >Direct</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=hit" >Hit</a></li><li style="border:0px;padding:0px;padding-top:8px;" class="list-inline-item"><a href="/idealstat_dev.php?c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&tab=2&base=counter3&tg=2&u=1595143549&syntype=referersocial" >Referersocial</a></li> </ul>
+</div>-->
+<div id="GraphStatsResult">
+<script>
+var barChartDev=null;
+var tab_data=new Array();
+$(document).ready(function () {
+if($(window).width()<640){var leratio=1.5;}
+else{var leratio=3;}
+    var BarChart = function () {
+        $.ajax({
+            url: 'https://counter3.idealstats.com/charts_dev/synthese_jour.php?base=counter3&c=fs8mg1ljhzpl17zme6hr6gub5w16q6dh&syntype=visitor&ecart_gmt=21600&d1=&title_c=&u=1595143550',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function (results) {
+console.log(results);
+                tab_data=results;
+
+
+
+
+		var barChartDataDev= {
+	   	labels  : results['label'],
+	      	datasets: [
+	      		{
+			type: 'line',
+				order:2,
+				label  : 'Cumul 7 day',
+				borderWidth: 4,
+				fill: false,
+			data:  results['date7_cum'],
+			yAxisID: 'y-axis-2',
+			backgroundColor: chartColors.orange,
+                        borderColor: chartColors.orange,
+                        pointBorderColor: chartColors.orange,
+                        pointBackgroundColor: chartColors.orange,
+			},
+			{
+			type: 'line',
+                                order:1,
+				label: 'Cumul yesterday',			
+				borderWidth: 4,
+				fill: false,
+			data:  results['date1_cum'],
+			yAxisID: 'y-axis-2',
+			backgroundColor: chartColors.vert,
+                        borderColor: chartColors.vert,
+                        pointBorderColor: chartColors.vert,
+                        pointBackgroundColor: chartColors.vert,
+			},
+			{
+			type: 'line',
+                                order:0,
+				label: 'Cumul today projecting',			
+				borderWidth: 4,
+				fill: false,
+			data:  results['date_cum'],
+			yAxisID: 'y-axis-2',
+			backgroundColor: chartColors.bleu,
+                        borderColor: chartColors.bleu,
+                        pointBorderColor: chartColors.bleu,
+                        pointBackgroundColor: chartColors.bleu,
+			},
+
+			{
+                        type: 'bar',
+                                order:5,
+                        label: 'Last week',
+                        data:  results['date7'],
+                        yAxisID: 'y-axis-1',
+                        backgroundColor:chartColors.orange,
+                        bevelWidth: 2,
+                        bevelHighlightColor:effectColors.highlight,
+                        bevelShadowColor:effectColors.shadow,
+                        borderWidth:0
+                        },
+			{
+                        type: 'bar',
+                                order:4,
+                        label: 'Yesterday',
+                        data:  results['date1'],
+                        yAxisID: 'y-axis-1',
+                        backgroundColor:chartColors.vert,
+                        bevelWidth: 2,
+                        bevelHighlightColor:effectColors.highlight,
+                        bevelShadowColor:effectColors.shadow,
+                        borderWidth:0
+                        },
+                        {
+                        type: 'bar',
+                                order:3,
+                        label: 'Today',
+                        data:  results['date'],
+                        yAxisID: 'y-axis-1',
+                        backgroundColor:chartColors.bleu,
+                        bevelWidth: 2,
+                        bevelHighlightColor:effectColors.highlight,
+                        bevelShadowColor:effectColors.shadow,
+                        borderWidth:0
+                        },
+	      ]
+	    }
+
+
+            var barChartCanvasDev = $('#barlineChart').get(0).getContext('2d');
+
+
+var barChartOptionsDev = {
+    options: {
+
+
+    tooplips: {
+      bevelWidth: 3,
+      bevelHighlightColor: 'rgba(255, 255, 255, 0.75)',
+      bevelShadowColor: 'rgba(0, 0, 0, 0.6)',
+      mode: 'single',
+      intersect: false,
+     }
+    },
+     title: {
+            display: true,
+            text: 'Daily Evolution  Sunday 19 July 2020',
+            position:'top',
+            fontSize:16,
+        },
+    legend: {
+            display: true,
+            position:'bottom',
+            align:'center',
+            labels: {
+                fontColor: 'rgb(50, 50, 50)'
+            }
+        },
+    plugins: {
+            colorschemes: {
+                scheme: 'brewer.SetOne9'
+            }
+        },
+
+aspectRatio:leratio,
+scales: {
+          xAxes: [{
+          ticks: {suggestedMin: 0,}
+            }],
+
+        yAxes: [{
+        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+        display: true,
+        position: 'left',
+        id: 'y-axis-1',
+        }, {
+        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+        display: true,
+        position: 'right',
+        id: 'y-axis-2',
+        gridLines: {
+        drawOnChartArea: false
+        }
+        }]
+        },
+       maintainAspectRatio     : true,
+      datasetFill : false,
+
+    }
+
+
+
+
+
+    var barChartDev = new Chart(barChartCanvasDev, {
+      type: 'bar',
+      data: barChartDataDev,
+      options: barChartOptionsDev
+    })
+
+            },
+            error: function (results) {
+                console.log(results);
+            }
+        });
+    };
+    BarChart();
+});
+
+</script>
+<div class="chart" style="max-width:100%; min-height:100%;padding:20px;">
+   <canvas id="barlineChart" style="display: block; height: 412px; width: 1238px;" width="1547" height="515" class="chartjs-render-monitor"></canvas>
+</div>
+</div>
+
+</div>
+</div>
+ 
+
+
+<script>
+function IdealStats_detail(qs,k){
+url="https://counter3.idealstats.com/charts/Bar2D_1_detail.php?"+qs+"&tf=fc&tg=2&cle="+k;
+document.getElementById('iframe_detail').src=url;
+}
+
+function GetId(id)
+{
+return document.getElementById(id);
+}
+
+var mousex=0;var mousey=0;
+function getMousePosition(e) {
+    if (navigator.appName!="Microsoft Internet Explorer") { // Si on est pas sous IE
+    mousex=e.pageX +5;
+    mousey=e.pageY + 10;
+    }
+    else { // Modif propos?~C©ar TeDeum, merci ?~C lui
+    if(document.documentElement.clientWidth>0) {
+    mousex=20+event.x+document.documentElement.scrollLeft;
+    mousey=10+event.y+document.documentElement.scrollTop;
+    } else {
+    mousex=20+event.x+document.body.scrollLeft;
+    mousey=10+event.y+document.body.scrollTop;
+         }
+    }
+}
+
+function cache() {
+GetId("curseur").style.visibility="hidden"; // Si la bulle est visible on la cache
+}
+
+document.onmousemove=getMousePosition;
+
+
+function aff_geo(url){
+ nav = navigator.appName;
+ if( nav == "Microsoft Internet Explorer"){
+ w=window.open(url,"geomap","menubar=no, status=no, scrollbars=no, menubar=no, width=950, height=500, top=100, left=50");
+ }
+ else{
+ document.location=url;
+ }
+}
+
+</script>
+<script>
+function dynamicColors() {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return "rgba(" + r + "," + g + "," + b + ", 0.8)";
+}
+function poolColors(data) {
+var pool = [];
+var pool20 = ['#4E79A7', '#A0CBE8', '#F28E2B', '#FFBE7D', '#59A14F', '#8CD17D', '#B6992D', '#F1CE63', '#499894', '#86BCB6', '#E15759', '#FF9D9A', '#79706E', '#BAB0AC', '#D37295', '#FABFD2', '#B07AA1', '#D4A6C8', '#9D7660', '#D7B5A6'];
+if(data>1000){data=1000;}
+if(Number(data)>20)
+{
+    //var pool = [];
+    for(i = 0; i < data-20; i++) {
+        pool.push(dynamicColors());
+    }
+    //pool20.concat(pool);
+}
+    return pool20.concat(pool);
+}
+</script>
+
+
+    <!--end bloc stats -->
+  </div>
+
+
+</body></html>
